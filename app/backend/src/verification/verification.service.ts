@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 import { ConfigService } from '@nestjs/config';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateVerificationDto } from './dto/create-verification.dto';
 import {
@@ -96,7 +97,7 @@ export class VerificationService {
       data: {
         status: shouldVerify ? 'verified' : 'pending',
         verificationScore: result.score,
-        verificationResult: result as unknown as Record<string, unknown>,
+        verificationResult: result as unknown as Prisma.InputJsonValue,
         verifiedAt: shouldVerify ? new Date() : null,
       },
     });
