@@ -8,6 +8,8 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { config as loadEnv } from 'dotenv';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { AllExceptionsFilter } from './common/filters/http-exception.filter';
+import { RequestIdInterceptor } from './common/interceptors/request-id.interceptor';
 
 async function bootstrap() {
   // Load environment variables
@@ -45,6 +47,12 @@ async function bootstrap() {
     defaultVersion: '1',
     prefix: 'v',
   });
+
+  // Register global exception filter
+  app.useGlobalFilters(new AllExceptionsFilter());
+
+  // Register global request ID interceptor
+  app.useGlobalInterceptors(new RequestIdInterceptor());
 
   // Global validation pipe
   app.useGlobalPipes(

@@ -6,6 +6,7 @@ import { AidModule } from './aid/aid.module';
 import { HealthModule } from './health/health.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { VerificationModule } from './verification/verification.module';
+import { TestErrorModule } from './test-error/test-error.module';
 import { LoggerModule } from './logger/logger.module';
 import { RequestCorrelationMiddleware } from './middleware/request-correlation.middleware';
 import { existsSync } from 'node:fs';
@@ -31,6 +32,7 @@ import { join } from 'node:path';
     HealthModule,
     AidModule,
     VerificationModule,
+    TestErrorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
