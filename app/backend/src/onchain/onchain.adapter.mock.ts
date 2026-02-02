@@ -37,6 +37,7 @@ export class MockOnchainAdapter implements OnchainAdapter {
   }
 
   async initEscrow(params: InitEscrowParams): Promise<InitEscrowResult> {
+    await Promise.resolve();
     const transactionHash = this.generateMockHash(
       `init-${params.adminAddress}-${Date.now()}`,
     );
@@ -54,6 +55,7 @@ export class MockOnchainAdapter implements OnchainAdapter {
   }
 
   async createClaim(params: CreateClaimParams): Promise<CreateClaimResult> {
+    await Promise.resolve();
     const packageId = this.generatePackageId(params.claimId);
     const transactionHash = this.generateMockHash(
       `create-${params.claimId}-${packageId}-${Date.now()}`,
@@ -76,6 +78,7 @@ export class MockOnchainAdapter implements OnchainAdapter {
   }
 
   async disburse(params: DisburseParams): Promise<DisburseResult> {
+    await Promise.resolve();
     const transactionHash = this.generateMockHash(
       `disburse-${params.claimId}-${params.packageId}-${Date.now()}`,
     );

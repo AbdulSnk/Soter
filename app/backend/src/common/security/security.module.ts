@@ -136,7 +136,8 @@ export const createCorsOriginValidator = (
 
   return (req: Request, res: Response, next: NextFunction) => {
     const originHeader = req.headers.origin;
-    const origin = Array.isArray(originHeader) ? originHeader[0] : originHeader;
+    const originRaw = Array.isArray(originHeader) ? originHeader[0] : originHeader;
+    const origin = typeof originRaw === 'string' ? originRaw : undefined;
     if (!origin) {
       next();
       return;
@@ -189,7 +190,10 @@ export const createRateLimiter = (config: ConfigService): RequestHandler => {
 
     const forwardedIp =
       Array.isArray(req.ips) && req.ips.length > 0 ? req.ips[0] : undefined;
-    const key = forwardedIp ?? req.ip ?? 'unknown';
+    const key: string =
+      (typeof forwardedIp === 'string' ? forwardedIp : undefined) ??
+      (typeof req.ip === 'string' ? req.ip : undefined) ??
+      'unknown';
     let entry = store.get(key);
     if (!entry || entry.resetTimeMs <= now) {
       entry = { count: 0, resetTimeMs: now + windowMs };

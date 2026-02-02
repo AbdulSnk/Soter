@@ -11,7 +11,10 @@ import { createHash } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateClaimDto } from './dto/create-claim.dto';
 import { ClaimStatus } from '@prisma/client';
-import { OnchainAdapter } from '../onchain/onchain.adapter';
+import {
+  OnchainAdapter,
+  DisburseResult,
+} from '../onchain/onchain.adapter';
 import { ONCHAIN_ADAPTER_TOKEN } from '../onchain/onchain.module';
 import { LoggerService } from '../logger/logger.service';
 import { MetricsService } from '../observability/metrics/metrics.service';
@@ -117,7 +120,7 @@ export class ClaimsService {
     }
 
     // Call on-chain adapter if enabled
-    let onchainResult = null;
+    let onchainResult: DisburseResult | null = null;
     if (this.onchainEnabled && this.onchainAdapter) {
       const startTime = Date.now();
       const adapterType =
@@ -241,7 +244,7 @@ export class ClaimsService {
     id: string,
     fromStatus: ClaimStatus,
     toStatus: ClaimStatus,
-    onchainResult?: any,
+    onchainResult?: DisburseResult | null,
   ) {
     const claim = await this.prisma.claim.findUnique({ where: { id } });
     if (!claim) {

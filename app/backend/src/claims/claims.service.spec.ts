@@ -13,8 +13,8 @@ describe('ClaimsService', () => {
   let service: ClaimsService;
   let prismaService: PrismaService;
   let onchainAdapter: OnchainAdapter;
-  let metricsService: MetricsService;
-  let auditService: AuditService;
+  let _metricsService: MetricsService;
+  let _auditService: AuditService;
   let configService: ConfigService;
 
   const mockClaim = {
@@ -112,8 +112,8 @@ describe('ClaimsService', () => {
     service = module.get<ClaimsService>(ClaimsService);
     prismaService = module.get<PrismaService>(PrismaService);
     onchainAdapter = module.get<OnchainAdapter>(ONCHAIN_ADAPTER_TOKEN);
-    metricsService = module.get<MetricsService>(MetricsService);
-    auditService = module.get<AuditService>(AuditService);
+    _metricsService = module.get<MetricsService>(MetricsService);
+    _auditService = module.get<AuditService>(AuditService);
     configService = module.get<ConfigService>(ConfigService);
 
     jest.clearAllMocks();
@@ -124,6 +124,7 @@ describe('ClaimsService', () => {
       jest.spyOn(prismaService.claim, 'findUnique').mockResolvedValue(mockClaim);
       jest.spyOn(prismaService, '$transaction').mockImplementation(
         async callback => {
+          await Promise.resolve();
           return callback({
             claim: {
               update: jest.fn().mockResolvedValue({
@@ -151,6 +152,7 @@ describe('ClaimsService', () => {
       jest.spyOn(prismaService.claim, 'findUnique').mockResolvedValue(mockClaim);
       jest.spyOn(prismaService, '$transaction').mockImplementation(
         async callback => {
+          await Promise.resolve();
           return callback({
             claim: {
               update: jest.fn().mockResolvedValue({
@@ -180,6 +182,7 @@ describe('ClaimsService', () => {
       jest.spyOn(prismaService.claim, 'findUnique').mockResolvedValue(mockClaim);
       jest.spyOn(prismaService, '$transaction').mockImplementation(
         async callback => {
+          await Promise.resolve();
           return callback({
             claim: {
               update: jest.fn().mockResolvedValue({
@@ -227,6 +230,7 @@ describe('ClaimsService', () => {
                 update: jest.fn(),
               },
               $transaction: jest.fn().mockImplementation(async callback => {
+                await Promise.resolve();
                 return callback({
                   claim: {
                     update: jest.fn().mockResolvedValue({
@@ -245,7 +249,7 @@ describe('ClaimsService', () => {
           {
             provide: ConfigService,
             useValue: {
-              get: jest.fn((key: string) => {
+              get: jest.fn((key: string): string | undefined => {
                 if (key === 'ONCHAIN_ENABLED') return 'false';
                 if (key === 'ONCHAIN_ADAPTER') return 'mock';
                 return undefined;
@@ -273,10 +277,11 @@ describe('ClaimsService', () => {
       }).compile();
 
       const disabledService = module.get<ClaimsService>(ClaimsService);
+      const disburseSpy = jest.spyOn(mockOnchainAdapter, 'disburse');
 
       await disabledService.disburse('claim-123');
 
-      expect(mockOnchainAdapter.disburse).not.toHaveBeenCalled();
+      expect(disburseSpy).not.toHaveBeenCalled();
     });
 
     it('should handle adapter errors gracefully', async () => {
@@ -287,6 +292,7 @@ describe('ClaimsService', () => {
       jest.spyOn(prismaService.claim, 'findUnique').mockResolvedValue(mockClaim);
       jest.spyOn(prismaService, '$transaction').mockImplementation(
         async callback => {
+          await Promise.resolve();
           return callback({
             claim: {
               update: jest.fn().mockResolvedValue({

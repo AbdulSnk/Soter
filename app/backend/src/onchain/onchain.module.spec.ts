@@ -6,7 +6,7 @@ import { MockOnchainAdapter } from './onchain.adapter.mock';
 
 describe('OnchainModule', () => {
   let module: TestingModule;
-  let configService: ConfigService;
+  let _configService: ConfigService;
 
   beforeEach(async () => {
     module = await Test.createTestingModule({
@@ -19,7 +19,7 @@ describe('OnchainModule', () => {
       ],
     }).compile();
 
-    configService = module.get<ConfigService>(ConfigService);
+    _configService = module.get<ConfigService>(ConfigService);
   });
 
   afterEach(async () => {
