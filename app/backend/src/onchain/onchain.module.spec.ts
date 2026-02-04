@@ -1,6 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { OnchainModule, ONCHAIN_ADAPTER_TOKEN, createOnchainAdapter } from './onchain.module';
+import {
+  OnchainModule,
+  ONCHAIN_ADAPTER_TOKEN,
+  createOnchainAdapter,
+} from './onchain.module';
 import { OnchainAdapter } from './onchain.adapter';
 import { MockOnchainAdapter } from './onchain.adapter.mock';
 

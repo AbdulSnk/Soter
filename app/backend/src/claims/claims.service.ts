@@ -11,10 +11,7 @@ import { createHash } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateClaimDto } from './dto/create-claim.dto';
 import { ClaimStatus } from '@prisma/client';
-import {
-  OnchainAdapter,
-  DisburseResult,
-} from '../onchain/onchain.adapter';
+import { OnchainAdapter, DisburseResult } from '../onchain/onchain.adapter';
 import { ONCHAIN_ADAPTER_TOKEN } from '../onchain/onchain.module';
 import { LoggerService } from '../logger/logger.service';
 import { MetricsService } from '../observability/metrics/metrics.service';
@@ -152,7 +149,11 @@ export class ClaimsService {
           adapterType,
           onchainResult.status,
         );
-        this.metricsService.recordOnchainDuration('disburse', adapterType, duration);
+        this.metricsService.recordOnchainDuration(
+          'disburse',
+          adapterType,
+          duration,
+        );
 
         this.logger.log(`On-chain disbursement completed for claim ${id}`, {
           claimId: id,
@@ -192,7 +193,11 @@ export class ClaimsService {
           adapterType,
           'failed',
         );
-        this.metricsService.recordOnchainDuration('disburse', adapterType, duration);
+        this.metricsService.recordOnchainDuration(
+          'disburse',
+          adapterType,
+          duration,
+        );
 
         // Audit log for failed operation
         await this.auditService.record({

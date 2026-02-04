@@ -19,7 +19,8 @@ describe('MockOnchainAdapter', () => {
   describe('initEscrow', () => {
     it('should return a valid InitEscrowResult', async () => {
       const params = {
-        adminAddress: 'GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF',
+        adminAddress:
+          'GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF',
       };
 
       const result = await adapter.initEscrow(params);
@@ -38,7 +39,8 @@ describe('MockOnchainAdapter', () => {
 
     it('should return deterministic results for same input', async () => {
       const params = {
-        adminAddress: 'GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF',
+        adminAddress:
+          'GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF',
       };
 
       const result1 = await adapter.initEscrow(params);
@@ -58,9 +60,11 @@ describe('MockOnchainAdapter', () => {
     it('should return a valid CreateClaimResult', async () => {
       const params = {
         claimId: 'claim-123',
-        recipientAddress: 'GBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+        recipientAddress:
+          'GBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
         amount: '1000000000',
-        tokenAddress: 'GCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+        tokenAddress:
+          'GCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
       };
 
       const result = await adapter.createClaim(params);
@@ -80,9 +84,11 @@ describe('MockOnchainAdapter', () => {
     it('should generate deterministic package ID from claim ID', async () => {
       const params = {
         claimId: 'claim-123',
-        recipientAddress: 'GBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+        recipientAddress:
+          'GBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
         amount: '1000000000',
-        tokenAddress: 'GCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+        tokenAddress:
+          'GCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
       };
 
       const result1 = await adapter.createClaim(params);
@@ -96,9 +102,11 @@ describe('MockOnchainAdapter', () => {
       const expiresAt = Math.floor(Date.now() / 1000) + 86400; // 24 hours from now
       const params = {
         claimId: 'claim-123',
-        recipientAddress: 'GBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+        recipientAddress:
+          'GBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
         amount: '1000000000',
-        tokenAddress: 'GCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+        tokenAddress:
+          'GCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
         expiresAt,
       };
 
@@ -113,7 +121,8 @@ describe('MockOnchainAdapter', () => {
       const params = {
         claimId: 'claim-123',
         packageId: '456',
-        recipientAddress: 'GBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+        recipientAddress:
+          'GBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
         amount: '1000000000',
       };
 
@@ -144,7 +153,8 @@ describe('MockOnchainAdapter', () => {
     });
 
     it('should include recipient address in metadata when provided', async () => {
-      const recipientAddress = 'GBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB';
+      const recipientAddress =
+        'GBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB';
       const params = {
         claimId: 'claim-123',
         packageId: '456',

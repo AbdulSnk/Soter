@@ -16,7 +16,8 @@ import { createHash } from 'crypto';
  */
 @Injectable()
 export class MockOnchainAdapter implements OnchainAdapter {
-  private readonly mockEscrowAddress = 'GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF';
+  private readonly mockEscrowAddress =
+    'GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF';
 
   /**
    * Generate a deterministic mock transaction hash from input
@@ -31,7 +32,9 @@ export class MockOnchainAdapter implements OnchainAdapter {
    * Generate a deterministic package ID from claim ID
    */
   private generatePackageId(claimId: string): string {
-    const hash = createHash('sha256').update(`package-${claimId}`).digest('hex');
+    const hash = createHash('sha256')
+      .update(`package-${claimId}`)
+      .digest('hex');
     // Convert first 16 hex chars to decimal for package ID
     return BigInt('0x' + hash.substring(0, 16)).toString();
   }
